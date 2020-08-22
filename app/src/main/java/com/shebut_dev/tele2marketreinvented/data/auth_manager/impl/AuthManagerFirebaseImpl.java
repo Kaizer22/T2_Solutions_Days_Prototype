@@ -14,6 +14,8 @@ import com.shebut_dev.tele2marketreinvented.data.auth_manager.AuthManager;
 public class AuthManagerFirebaseImpl implements AuthManager {
     private String LANGUAGE_CODE = "ru";
     private String currentUserID = "";
+    private String currentUserPhoneNumber = "";
+
 
     private FirebaseAuth auth;
 
@@ -31,9 +33,8 @@ public class AuthManagerFirebaseImpl implements AuthManager {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            //Лучше использовать ID
-                            //currentUserID = auth.getCurrentUser().getPhoneNumber();
-                            currentUserID = auth.getCurrentUser().getPhoneNumber();
+                            currentUserPhoneNumber = auth.getCurrentUser().getPhoneNumber();
+                            currentUserID = auth.getCurrentUser().getUid();
                             Log.d("AUTH_MANAGER_FIREBASE", currentUserID);
                             callback.onSignInComplete(currentUserID);
                         }else {
@@ -46,5 +47,9 @@ public class AuthManagerFirebaseImpl implements AuthManager {
     @Override
     public String getCurrentUserID() {
         return currentUserID;
+    }
+    @Override
+    public String getCurrentUserPhoneNumber() {
+        return currentUserPhoneNumber;
     }
 }

@@ -14,4 +14,5 @@ public interface AuthManager {
                                SignInWithPhoneNumberCallback callback);
 
     String getCurrentUserID();
+    String getCurrentUserPhoneNumber();
 }

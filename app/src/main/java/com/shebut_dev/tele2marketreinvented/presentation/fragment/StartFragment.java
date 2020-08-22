@@ -18,13 +18,15 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.shebut_dev.tele2marketreinvented.R;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.AuthManager;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.impl.AuthManagerFirebaseImpl;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
+import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 import com.shebut_dev.tele2marketreinvented.presentation.activity.MainActivity;
 
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 public class StartFragment extends Fragment {
 
-    AuthManager authManager;
     PhoneAuthCredential myPhoneAuthCredential;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks verCallbacks;
 
@@ -32,7 +34,6 @@ public class StartFragment extends Fragment {
     String sessionVerificationID;
 
     private void init(){
-        authManager = new AuthManagerFirebaseImpl();
         verCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -73,20 +74,34 @@ public class StartFragment extends Fragment {
     }
 
     private void signInWithCredentials(){
+        MainActivity baseActivity = (MainActivity) getActivity();
         EditText codeEditText = getActivity().findViewById(R.id.edit_text_code);
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(
                 sessionVerificationID,
                 codeEditText.getText().toString()
         );
-        authManager.signInWithPhoneNumber(credential, new AuthManager.SignInWithPhoneNumberCallback() {
+        baseActivity.getAuthManager().signInWithPhoneNumber(credential, new AuthManager.SignInWithPhoneNumberCallback() {
             @Override
             public void onSignInComplete(String currentUserID) {
                 Toast.makeText(getActivity(), "HELLO" + currentUserID, Toast.LENGTH_LONG)
                         .show();
-                MainActivity activity = (MainActivity)getActivity();
-                activity.navigateToMainScreen();
-            }
+                baseActivity.getDataManager().postUser(new UserModel(baseActivity.getAuthManager().getCurrentUserID(),
+                                10,
+                                "Ivan",
+                                baseActivity.getAuthManager().getCurrentUserPhoneNumber(),
+                                new LinkedList<>()),
+                        new DataManager.PostUserCallback() {
+                            @Override
+                            public void onFinish(String userID) {
+                                baseActivity.navigateToMainScreen();
+                            }
 
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
+            }
             @Override
             public void onError(Exception e) {
                 e.printStackTrace();

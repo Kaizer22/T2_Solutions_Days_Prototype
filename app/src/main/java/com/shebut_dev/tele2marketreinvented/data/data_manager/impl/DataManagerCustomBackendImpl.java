@@ -1,11 +1,18 @@
 package com.shebut_dev.tele2marketreinvented.data.data_manager.impl;
 
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
-import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.GetUserById.GetUserByIdUseCase;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.get.GetUserByIdUseCase;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.UseCaseStateCallback;
+import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 public class DataManagerCustomBackendImpl implements DataManager {
     GetUserByIdUseCase getUserByIdUseCase;
+
+    @Override
+    public void testReq(String data, TestCallback testCallback) {
+
+    }
+
     @Override
     public void getUserByID(String userID, GetUserByIDCallback callback) {
         getUserByIdUseCase = new GetUserByIdUseCase(new UseCaseStateCallback() {
@@ -24,7 +31,29 @@ public class DataManagerCustomBackendImpl implements DataManager {
     }
 
     @Override
+    public void getUserLots(String userID, GetUserLotsCallback callback) {
+
+    }
+
+    @Override
+    public void postUser(UserModel userModel, PostUserCallback callback) {
+
+    }
+
+
+
+    @Override
     public void getGbStatistics(GetGbStatisticsCallback callback) {
+
+    }
+
+    @Override
+    public void postLot() {
+
+    }
+
+    @Override
+    public void deleteLot() {
 
     }
 }

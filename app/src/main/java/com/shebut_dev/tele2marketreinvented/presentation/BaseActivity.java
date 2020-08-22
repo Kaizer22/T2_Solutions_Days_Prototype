@@ -13,10 +13,12 @@ import com.shebut_dev.tele2marketreinvented.data.auth_manager.AuthManager;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.impl.AuthManagerFirebaseImpl;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.DataManagerCustomBackendImpl;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.DataManagerFirebaseImpl;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected AuthManager authManager;
+    protected DataManager dataManager;
     protected abstract void initializeActivity(Bundle savedInstanceState);
 
     @Override
@@ -24,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initializeActivity(savedInstanceState);
         authManager = new AuthManagerFirebaseImpl();
+        dataManager = new DataManagerFirebaseImpl();
     }
 
 

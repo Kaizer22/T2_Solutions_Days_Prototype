@@ -1,4 +1,4 @@
-package com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.GetUserById;
+package com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.get;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,18 +9,17 @@ import com.shebut_dev.tele2marketreinvented.data.network.NetworkHelper;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class GetUserByIdUseCase extends AsyncTask<String, String, String> {
+public class GetGbStatisticsUseCase  extends AsyncTask<String, String, String> {
     UseCaseStateCallback stateCallback;
     NetworkHelper helper;
     String result;
 
-    public GetUserByIdUseCase(UseCaseStateCallback callback){
+    public GetGbStatisticsUseCase(UseCaseStateCallback callback){
         stateCallback = callback;
         helper = new NetworkHelper();
     }
@@ -36,7 +35,7 @@ public class GetUserByIdUseCase extends AsyncTask<String, String, String> {
         URL url = null;
         result = "got nothing useful";
         try {
-            url = new URL("http://www.android.com/");
+            url = new URL("https://www.android.com/");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 InputStream in = new BufferedInputStream((urlConnection.getInputStream()));

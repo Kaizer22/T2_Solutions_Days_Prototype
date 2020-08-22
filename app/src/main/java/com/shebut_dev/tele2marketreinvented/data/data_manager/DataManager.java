@@ -17,10 +17,40 @@ public interface DataManager {
         void onError(Exception e);
     }
 
+    interface GetUserLotsCallback{
+        void onFinish();
+        void onError(Exception e);
+    }
+
+    interface TestCallback{
+        void onFinish(String result);
+        void onError(Exception e);
+    }
+
+    interface PostUserCallback{
+        void onFinish(String userID);
+        void onError(Exception e);
+    }
+
+    void testReq(String data,
+                 TestCallback testCallback );
+
     void getUserByID(String userID,
                             GetUserByIDCallback callback);
 
+    void getUserLots(String userID,
+                     GetUserLotsCallback callback);
+
+    void postUser(UserModel userModel,
+                  PostUserCallback callback);
+
     void getGbStatistics(GetGbStatisticsCallback callback);
+
+    void postLot();
+
+    void deleteLot();
+
+
 
 
 }

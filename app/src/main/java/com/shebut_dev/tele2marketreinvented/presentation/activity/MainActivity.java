@@ -11,6 +11,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.shebut_dev.tele2marketreinvented.R;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.AuthManager;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.impl.AuthManagerFirebaseImpl;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.presentation.BaseActivity;
 import com.shebut_dev.tele2marketreinvented.presentation.fragment.HomeFragment;
 import com.shebut_dev.tele2marketreinvented.presentation.fragment.StartFragment;
@@ -33,5 +34,13 @@ public class MainActivity extends BaseActivity {
     public void navigateToMainScreen(){
         replaceFragment(R.id.main_container, new HomeFragment(
                 authManager.getCurrentUserID()));
+    }
+
+    public AuthManager getAuthManager(){
+        return authManager;
+    }
+
+    public DataManager getDataManager(){
+        return dataManager;
     }
 }
