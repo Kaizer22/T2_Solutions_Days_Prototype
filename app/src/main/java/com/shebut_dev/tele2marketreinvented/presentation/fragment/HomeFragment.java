@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TabHost;
 
 import androidx.annotation.NonNull;
@@ -11,13 +12,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.shebut_dev.tele2marketreinvented.R;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
+import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.DataManagerCustomBackendImpl;
+import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 public class HomeFragment extends Fragment {
     private String currentUserID;
+    private DataManager dataManager;
     private TabHost tabHost;
 
     public HomeFragment(String currentUserID){
         this.currentUserID = currentUserID;
+        dataManager = new DataManagerCustomBackendImpl();
     }
 
     @Nullable
@@ -25,7 +31,24 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         initTabs(root);
+        initInteractions(root);
         return root;
+    }
+
+    private void initInteractions(View root){
+        ImageButton button = root.findViewById(R.id.button_test_request);
+        button.setOnClickListener(l -> dataManager.getUserByID("test",
+                new DataManager.GetUserByIDCallback() {
+                    @Override
+                    public void onFinish(UserModel userModel) {
+                        //Пока null
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
     }
 
     private void initRecyclerViews(View root){
