@@ -87,12 +87,7 @@
         android:orientation="vertical"
         android:weightSum="100"
         android:layout_marginTop="@dimen/top_bar_height">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10">
 
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -108,6 +103,55 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10">
+            <RadioGroup
+                android:id="@+id/value_type_radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+                <RadioButton
+                    android:id="@+id/radio_button_gb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/tele2_radio_button_shape"
+                    android:button="@android:drawable/btn_radio"
+                    android:padding="10dp"
+                    android:text="Гб" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/tele2_radio_button_shape"
+                    android:button="@android:drawable/btn_radio"
+                    android:padding="10dp"
+                    android:text="Минуты" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_sms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/tele2_radio_button_shape"
+                    android:button="@android:drawable/btn_radio"
+                    android:padding="10dp"
+                    android:text="SMS" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

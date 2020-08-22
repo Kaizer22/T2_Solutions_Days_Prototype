@@ -66,10 +66,13 @@ public class StartFragment extends Fragment {
     }
 
     private void initInteractions(View root) {
+        EditText codeField = root.findViewById(R.id.edit_text_code);
         Button sendCode = root.findViewById(R.id.button_send_code);
         Button signIn = root.findViewById(R.id.button_sign_in);
 
-        sendCode.setOnClickListener(l -> verifyPhoneNumber());
+        sendCode.setOnClickListener(l -> {verifyPhoneNumber();
+            signIn.setVisibility(View.VISIBLE);
+            codeField.setVisibility(View.VISIBLE); });
         signIn.setOnClickListener(l -> signInWithCredentials());
     }
 

@@ -3,6 +3,7 @@ package com.shebut_dev.tele2marketreinvented.data.data_manager.impl;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.get.GetUserByIdUseCase;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.impl.custom_usecases.UseCaseStateCallback;
+import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 public class DataManagerCustomBackendImpl implements DataManager {
@@ -48,9 +49,10 @@ public class DataManagerCustomBackendImpl implements DataManager {
     }
 
     @Override
-    public void postLot() {
+    public void postLot(String userId, LotModel lotModel, PostLotCallback callback) {
 
     }
+
 
     @Override
     public void deleteLot() {

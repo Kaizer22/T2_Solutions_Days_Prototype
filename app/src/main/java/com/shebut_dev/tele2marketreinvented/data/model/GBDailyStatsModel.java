@@ -2,21 +2,21 @@ package com.shebut_dev.tele2marketreinvented.data.model;
 
 import java.util.List;
 
-public class GBDailyStats {
+public class GBDailyStatsModel {
     public double currentAveragePrice;
     public long currentGBAmount;
     public long currentLotsCount;
-    public List<DayPoint> monthlyTimeline;
+    public List<DayPointModel> monthlyTimeline;
 
-    public GBDailyStats(double currentAveragePrice, long currentGBAmount,
-                        long currentLotsCount, List<DayPoint> monthlyTimeline){
+    public GBDailyStatsModel(double currentAveragePrice, long currentGBAmount,
+                             long currentLotsCount, List<DayPointModel> monthlyTimeline){
         this.currentAveragePrice = currentAveragePrice;
         this.currentGBAmount = currentGBAmount;
         this.currentLotsCount = currentLotsCount;
         this.monthlyTimeline = monthlyTimeline;
     }
 
-    public GBDailyStats(){
+    public GBDailyStatsModel(){
 
     }
 }

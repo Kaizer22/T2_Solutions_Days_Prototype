@@ -4,11 +4,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shebut_dev.tele2marketreinvented.R;
-import com.shebut_dev.tele2marketreinvented.data.model.Lot;
+import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
 
 public class MyLotsViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,12 +27,12 @@ public class MyLotsViewHolder extends RecyclerView.ViewHolder {
         lotID = itemView.findViewById(R.id.lot_id);
     }
 
-    public void bind(Lot lotOnBind){
-        count.setText(String.valueOf(lotOnBind.nominal));
-        price.setText(String.valueOf(lotOnBind.price));
+    public void bind(LotModel lotModelOnBind){
+        count.setText(String.valueOf(lotModelOnBind.nominal));
+        price.setText(String.valueOf(lotModelOnBind.price));
         //TODO текстовая интерпретация даты
-        timestamp.setText(lotOnBind.creationDate);
-        type.setText(lotOnBind.lotType);
-        lotID.setText(lotOnBind.lotID);
+        timestamp.setText(lotModelOnBind.creationDate);
+        type.setText(lotModelOnBind.lotType);
+        lotID.setText(lotModelOnBind.lotID);
     }
 }

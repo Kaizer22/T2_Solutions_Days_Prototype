@@ -1,9 +1,7 @@
 package com.shebut_dev.tele2marketreinvented.data.data_manager;
 
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStats;
-import com.shebut_dev.tele2marketreinvented.data.model.Lot;
+import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
+import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 import java.util.List;
@@ -17,12 +15,12 @@ public interface DataManager {
     }
 
     interface GetGbStatisticsCallback{
-        void onFinish(GBDailyStats gbDailyStats);
+        void onFinish(GBDailyStatsModel gbDailyStatsModel);
         void onError(Exception e);
     }
 
     interface GetUserLotsCallback{
-        void onFinish(List<Lot> lots);
+        void onFinish(List<LotModel> lotModels);
         void onError(Exception e);
     }
 
@@ -33,6 +31,11 @@ public interface DataManager {
 
     interface PostUserCallback{
         void onFinish(String userID);
+        void onError(Exception e);
+    }
+
+    interface  PostLotCallback{
+        void onFinish();
         void onError(Exception e);
     }
 
@@ -50,7 +53,8 @@ public interface DataManager {
 
     void getGbStatistics(GetGbStatisticsCallback callback);
 
-    void postLot();
+    void postLot(String userId, LotModel lotModel,
+                 PostLotCallback callback);
 
     void deleteLot();
 

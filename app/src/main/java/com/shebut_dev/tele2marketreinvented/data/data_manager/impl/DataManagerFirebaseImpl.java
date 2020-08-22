@@ -4,15 +4,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
-import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStats;
-import com.shebut_dev.tele2marketreinvented.data.model.Lot;
+import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
+import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 import java.util.HashMap;
@@ -65,15 +64,15 @@ public class DataManagerFirebaseImpl implements DataManager {
 
     @Override
     public void getUserLots(String userID, GetUserLotsCallback callback) {
-        List<Lot> lots = new LinkedList<>();
+        List<LotModel> lotModels = new LinkedList<>();
         ref.child("Lot").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot keyNode : snapshot.getChildren() ) {
-                    Lot lot = keyNode.getValue(Lot.class);
-                    lots.add(lot);
+                    LotModel lotModel = keyNode.getValue(LotModel.class);
+                    lotModels.add(lotModel);
                 }
-                callback.onFinish(lots);
+                callback.onFinish(lotModels);
             }
 
             @Override
@@ -99,7 +98,7 @@ public class DataManagerFirebaseImpl implements DataManager {
         ref.child("DailyStats").child("GB").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                callback.onFinish(snapshot.getValue(GBDailyStats.class));
+                callback.onFinish(snapshot.getValue(GBDailyStatsModel.class));
             }
 
             @Override
@@ -110,9 +109,15 @@ public class DataManagerFirebaseImpl implements DataManager {
     }
 
     @Override
-    public void postLot() {
-
+    public void postLot(String userId, LotModel lotModel, PostLotCallback callback) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(lotModel.lotID, lotModel);
+        DatabaseReference ref = database.getReference().child("Lot").child(userId);
+        ref.updateChildren(map)
+                .addOnSuccessListener(l -> callback.onFinish())
+                .addOnFailureListener(callback::onError);
     }
+
 
     @Override
     public void deleteLot() {
