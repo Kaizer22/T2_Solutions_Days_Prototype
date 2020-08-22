@@ -11,23 +11,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
+import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStats;
+import com.shebut_dev.tele2marketreinvented.data.model.Lot;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class DataManagerFirebaseImpl implements DataManager {
 
     private FirebaseDatabase database;
+    private DatabaseReference ref;
 
     public DataManagerFirebaseImpl(){
         database = FirebaseDatabase.getInstance();
+        ref = database.getReference();
     }
 
 
     @Override
     public void testReq(String data, TestCallback testCallback) {
-        DatabaseReference ref = database.getReference();
         ref.child("Lot").child("lot_id").child("type");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -44,7 +49,6 @@ public class DataManagerFirebaseImpl implements DataManager {
 
     @Override
     public void getUserByID(String userID, GetUserByIDCallback callback) {
-        DatabaseReference ref = database.getReference();
         ref.child("User").child(userID).child("type");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,7 +65,22 @@ public class DataManagerFirebaseImpl implements DataManager {
 
     @Override
     public void getUserLots(String userID, GetUserLotsCallback callback) {
+        List<Lot> lots = new LinkedList<>();
+        ref.child("Lot").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot keyNode : snapshot.getChildren() ) {
+                    Lot lot = keyNode.getValue(Lot.class);
+                    lots.add(lot);
+                }
+                callback.onFinish(lots);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error.toException());
+            }
+        });
     }
 
     @Override
@@ -77,7 +96,17 @@ public class DataManagerFirebaseImpl implements DataManager {
 
     @Override
     public void getGbStatistics(GetGbStatisticsCallback callback) {
+        ref.child("DailyStats").child("GB").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.onFinish(snapshot.getValue(GBDailyStats.class));
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error.toException());
+            }
+        });
     }
 
     @Override

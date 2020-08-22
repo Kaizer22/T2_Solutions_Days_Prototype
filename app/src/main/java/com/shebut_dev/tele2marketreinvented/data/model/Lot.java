@@ -4,5 +4,7 @@ public class Lot {
     public String lotID;
     public String creationDate;
     public int nominal;
-    public String type;
+    public double price;
+    public String lotType;
+    public String itemType;
 }

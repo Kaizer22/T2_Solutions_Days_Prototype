@@ -96,12 +96,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="25">
+            android:layout_weight="25"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp">
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/average_price_bar"
+                android:id="@+id/average_price_graph"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         </LinearLayout>
@@ -143,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="TextView" />
+                            android:text="средняя цена за 1 гб" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -166,7 +169,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="TextView" />
+                            android:text="лотов" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -189,7 +192,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="TextView" />
+                            android:text="всего продается" />
 
                     </LinearLayout>
 
@@ -205,13 +208,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/my_lots_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
+                    android:paddingBottom="200dp"
+                    android:clipToPadding="false"
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/button_to_create_lot"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

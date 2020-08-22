@@ -17,6 +17,5 @@ public class UserModel {
         this.name = name;
         this.phone = phone;
         this.lotIDs = lotIDs;
-
     }
 }

@@ -13,6 +13,9 @@ import com.shebut_dev.tele2marketreinvented.data.auth_manager.AuthManager;
 import com.shebut_dev.tele2marketreinvented.data.auth_manager.impl.AuthManagerFirebaseImpl;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.presentation.BaseActivity;
+import com.shebut_dev.tele2marketreinvented.presentation.fragment.AddLotFragment;
+import com.shebut_dev.tele2marketreinvented.presentation.fragment.ApprovalFragment;
+import com.shebut_dev.tele2marketreinvented.presentation.fragment.EditLotFragment;
 import com.shebut_dev.tele2marketreinvented.presentation.fragment.HomeFragment;
 import com.shebut_dev.tele2marketreinvented.presentation.fragment.StartFragment;
 
@@ -34,6 +37,17 @@ public class MainActivity extends BaseActivity {
     public void navigateToMainScreen(){
         replaceFragment(R.id.main_container, new HomeFragment(
                 authManager.getCurrentUserID()));
+    }
+    public void navigateToEditLot(String lotID){
+        replaceFragment(R.id.main_container, new EditLotFragment(lotID));
+    }
+
+    public void navigateToCreateLot(){
+        replaceFragment(R.id.main_container, new AddLotFragment());
+    }
+
+    public void navigateToApproval(){
+        replaceFragment(R.id.main_container, new ApprovalFragment());
     }
 
     public AuthManager getAuthManager(){
