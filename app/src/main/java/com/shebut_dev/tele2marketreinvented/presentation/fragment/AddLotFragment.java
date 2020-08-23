@@ -80,7 +80,6 @@ public class AddLotFragment extends Fragment {
     }
 
     private void createLot(View root, MainActivity baseActivity) {
-        Random random = new Random();
         RadioGroup valueType = root.findViewById(R.id.value_type_radio);
         RadioGroup lotType = root.findViewById(R.id.lot_type_radio);
         LotModel lot = new LotModel();
@@ -89,7 +88,6 @@ public class AddLotFragment extends Fragment {
         lot.creationDate = d.toString();
         lot.nominal = shownCount;
         lot.price = shownPrice;
-        lot.lotID = "lot" + random.nextInt(1000000) ;
 
         switch (lotType.getCheckedRadioButtonId()){
             case R.id.radio_button_sell:

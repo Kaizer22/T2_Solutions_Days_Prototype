@@ -39,6 +39,16 @@ public interface DataManager {
         void onError(Exception e);
     }
 
+    interface EditLotCallback{
+        void onFinish();
+        void onError(Exception e);
+    }
+
+    interface GetLotCallback{
+        void onFinish(LotModel lotModel);
+        void onError(Exception e);
+    }
+
     void testReq(String data,
                  TestCallback testCallback );
 
@@ -53,8 +63,14 @@ public interface DataManager {
 
     void getGbStatistics(GetGbStatisticsCallback callback);
 
-    void postLot(String userId, LotModel lotModel,
+    void postLot(String userID, LotModel lotModel,
                  PostLotCallback callback);
+
+    void getLot(String userId, String lotID,
+                GetLotCallback callback);
+
+    void editLot(String userID, LotModel lotModel,
+                 EditLotCallback callback);
 
     void deleteLot();
 

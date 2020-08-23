@@ -49,7 +49,17 @@ public class DataManagerCustomBackendImpl implements DataManager {
     }
 
     @Override
-    public void postLot(String userId, LotModel lotModel, PostLotCallback callback) {
+    public void postLot(String userID, LotModel lotModel, PostLotCallback callback) {
+
+    }
+
+    @Override
+    public void getLot(String userId, String lotID, GetLotCallback callback) {
+
+    }
+
+    @Override
+    public void editLot(String userID, LotModel lotModel, EditLotCallback callback) {
 
     }
 

@@ -109,10 +109,37 @@ public class DataManagerFirebaseImpl implements DataManager {
     }
 
     @Override
-    public void postLot(String userId, LotModel lotModel, PostLotCallback callback) {
+    public void getLot(String userId, String lotID, GetLotCallback callback) {
+        ref.child("Lot").child(userId).child(lotID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.onFinish(snapshot.getValue(LotModel.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void postLot(String userID, LotModel lotModel, PostLotCallback callback) {
+        String firebaseID = ref.push().getKey();
+        Map<String, Object> map = new HashMap<>();
+        lotModel.lotID = firebaseID;
+        map.put(firebaseID, lotModel);
+        DatabaseReference ref = database.getReference().child("Lot").child(userID);
+        ref.updateChildren(map)
+                .addOnSuccessListener(l -> callback.onFinish())
+                .addOnFailureListener(callback::onError);
+    }
+
+    @Override
+    public void editLot(String userID, LotModel lotModel, EditLotCallback callback) {
         Map<String, Object> map = new HashMap<>();
         map.put(lotModel.lotID, lotModel);
-        DatabaseReference ref = database.getReference().child("Lot").child(userId);
+        DatabaseReference ref = database.getReference().child("Lot").child(userID);
         ref.updateChildren(map)
                 .addOnSuccessListener(l -> callback.onFinish())
                 .addOnFailureListener(callback::onError);
