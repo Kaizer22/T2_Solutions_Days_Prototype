@@ -1,10 +1,13 @@
 package com.shebut_dev.tele2marketreinvented.presentation.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -66,6 +69,9 @@ public class AddLotFragment extends Fragment {
         ImageButton backToHome = root.findViewById(R.id.button_back_to_home_screen);
         Button createLot = root.findViewById(R.id.button_create_lot);
 
+        TextView editPriceLink = root.findViewById(R.id.set_price_link);
+        editPriceLink.setOnClickListener(l -> openEditPriceDialog(root));
+
         ImageButton increase = root.findViewById(R.id.button_increase_count);
         ImageButton decrease = root.findViewById(R.id.button_decrease_count);
 
@@ -77,6 +83,25 @@ public class AddLotFragment extends Fragment {
                 baseActivity.navigateToMainScreen());
         createLot.setOnClickListener(l ->
                 createLot(root, baseActivity));
+    }
+
+    private void openEditPriceDialog(View root) {
+       LayoutInflater layoutInflater = LayoutInflater.from(getContext()) ;
+       View editPrice = layoutInflater.inflate(R.layout.edit_price_dialog, null);
+
+       AlertDialog.Builder alertDB = new AlertDialog.Builder(getContext());
+       alertDB.setView(editPrice);
+       final EditText priceInput = editPrice.findViewById(R.id.edit_text_edit_price);
+       alertDB
+               .setCancelable(false)
+               .setPositiveButton("Сохранить",
+                       (dialog, which) -> {
+                           shownPrice = Double.parseDouble(priceInput.getText().toString());
+                           updateTextFields(root);
+                           dialog.cancel();
+                       })
+       .setNegativeButton("Назад", (dialog, which) -> dialog.cancel());
+        alertDB.show();
     }
 
     private void createLot(View root, MainActivity baseActivity) {

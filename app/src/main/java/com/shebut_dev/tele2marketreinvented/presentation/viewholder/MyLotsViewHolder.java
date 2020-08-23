@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shebut_dev.tele2marketreinvented.R;
+import com.shebut_dev.tele2marketreinvented.data.SharedDataBaseReferences;
 import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
 
 public class MyLotsViewHolder extends RecyclerView.ViewHolder {
@@ -16,6 +17,9 @@ public class MyLotsViewHolder extends RecyclerView.ViewHolder {
     private TextView timestamp;
     private TextView type;
     private TextView lotID;
+    private TextView valueType;
+
+    String valueTypeStr;
 
     public MyLotsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +29,8 @@ public class MyLotsViewHolder extends RecyclerView.ViewHolder {
         timestamp = itemView.findViewById(R.id.items_timestamp);
         type = itemView.findViewById(R.id.lot_type);
         lotID = itemView.findViewById(R.id.lot_id);
+
+        valueType = itemView.findViewById(R.id.value_type);
     }
 
     public void bind(LotModel lotModelOnBind){
@@ -34,5 +40,16 @@ public class MyLotsViewHolder extends RecyclerView.ViewHolder {
         timestamp.setText(lotModelOnBind.creationDate);
         type.setText(lotModelOnBind.lotType);
         lotID.setText(lotModelOnBind.lotID);
+        lotID.setVisibility(View.GONE);
+
+        valueTypeStr  = lotModelOnBind.itemType.equals(SharedDataBaseReferences.itemTypeGB)
+                ? "Гб" :
+                lotModelOnBind.itemType.equals(SharedDataBaseReferences.itemTypeMIN)
+                        ? "Мин" :
+                        lotModelOnBind.itemType.equals(SharedDataBaseReferences.itemTypeSMS)
+                                ? "SMS" : "???";
+        valueType.setText(
+                valueTypeStr );
+
     }
 }

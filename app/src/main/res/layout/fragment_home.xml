@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_dropdown" />
+            app:srcCompat="@drawable/tele2_logo" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -126,6 +126,7 @@
                     android:background="@drawable/tele2_radio_button_shape"
                     android:button="@android:drawable/btn_radio"
                     android:padding="10dp"
+                    android:checked="true"
                     android:text="Гб" />
 
                 <RadioButton
@@ -183,6 +184,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
                             android:text="TextView" />
 
                         <TextView
@@ -206,6 +210,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
                             android:text="TextView" />
 
                         <TextView
@@ -229,7 +236,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="TextView" />
+                            android:text="TextView"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/total_label"

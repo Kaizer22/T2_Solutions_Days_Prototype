@@ -12,6 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
+import com.shebut_dev.tele2marketreinvented.data.model.MinDailyStatsModel;
+import com.shebut_dev.tele2marketreinvented.data.model.SMSDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 import java.util.HashMap;
@@ -99,6 +101,36 @@ public class DataManagerFirebaseImpl implements DataManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 callback.onFinish(snapshot.getValue(GBDailyStatsModel.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void getSMSStatistics(GetSMSStatisticsCallback callback) {
+        ref.child("DailyStats").child("SMS").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.onFinish(snapshot.getValue(SMSDailyStatsModel.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void getMinStatistics(GetMinStatisticsCallback callback) {
+        ref.child("DailyStats").child("MIN").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.onFinish(snapshot.getValue(MinDailyStatsModel.class));
             }
 
             @Override

@@ -49,6 +49,16 @@ public class DataManagerCustomBackendImpl implements DataManager {
     }
 
     @Override
+    public void getSMSStatistics(GetSMSStatisticsCallback callback) {
+
+    }
+
+    @Override
+    public void getMinStatistics(GetMinStatisticsCallback callback) {
+
+    }
+
+    @Override
     public void postLot(String userID, LotModel lotModel, PostLotCallback callback) {
 
     }

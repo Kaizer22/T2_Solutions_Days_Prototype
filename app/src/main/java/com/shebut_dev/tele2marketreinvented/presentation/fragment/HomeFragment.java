@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.shebut_dev.tele2marketreinvented.data.mapper.LineGraphSeriesMapper;
 import com.shebut_dev.tele2marketreinvented.data.model.DayPointModel;
 import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
+import com.shebut_dev.tele2marketreinvented.data.model.MinDailyStatsModel;
+import com.shebut_dev.tele2marketreinvented.data.model.SMSDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 import com.shebut_dev.tele2marketreinvented.presentation.activity.MainActivity;
 import com.shebut_dev.tele2marketreinvented.presentation.adapter.MyLotsAdapter;
@@ -43,7 +46,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         MainActivity baseActivity = (MainActivity) getActivity();
-        initStats(root, baseActivity);
         initTabs(root);
         initInteractions(root, baseActivity);
         initRecyclerView(root, baseActivity);
@@ -53,25 +55,20 @@ public class HomeFragment extends Fragment {
     private void initInteractions(View root, MainActivity baseActivity){
 
         ImageButton button = root.findViewById(R.id.button_test_request);
-        ImageButton button2 = root.findViewById(R.id.button_test_request_2);
         Button toLotCreation = root.findViewById(R.id.button_to_create_lot);
+
+        RadioGroup radioGroup = root.findViewById(R.id.value_type_radio);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            initStats(checkedId,
+                    root, baseActivity);
+        });
+        radioGroup.check(R.id.radio_button_gb);
+        initStats(R.id.radio_button_gb, root, baseActivity);
 
         toLotCreation.setOnClickListener(l -> {
             baseActivity.navigateToCreateLot();
         });
 
-        button2.setOnClickListener(l -> baseActivity
-                .getDataManager().testReq("TEST", new DataManager.TestCallback() {
-            @Override
-            public void onFinish(String result) {
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        }));
         button.setOnClickListener(l -> baseActivity
                 .getDataManager().getUserByID("test",
                 new DataManager.GetUserByIDCallback() {
@@ -87,25 +84,71 @@ public class HomeFragment extends Fragment {
                 }));
     }
 
-    private void initStats(View root, MainActivity baseActivity){
+
+
+    private void initStats(int checkedRadioButton, View root, MainActivity baseActivity){
         TextView averagePrice = root.findViewById(R.id.average_price);
         TextView totalLotCount = root.findViewById(R.id.total_lot_count);
         TextView totalAmount = root.findViewById(R.id.total_amount);
-        baseActivity.getDataManager().getGbStatistics(new DataManager.GetGbStatisticsCallback() {
-            @Override
-            public void onFinish(GBDailyStatsModel gbDailyStatsModel) {
-                averagePrice.setText(String.valueOf(gbDailyStatsModel.currentAveragePrice));
-                totalLotCount.setText(String.valueOf(gbDailyStatsModel.currentLotsCount));
-                totalAmount.setText(String.valueOf(gbDailyStatsModel.currentGBAmount));
-                initGraph(root, gbDailyStatsModel.monthlyTimeline);
-                Log.d("TEST", String.valueOf(gbDailyStatsModel.monthlyTimeline.get(0).number));
-            }
 
-            @Override
-            public void onError(Exception e) {
-                e.printStackTrace();
+        switch (checkedRadioButton){
+            case R.id.radio_button_gb:{
+                baseActivity.getDataManager().getGbStatistics(new DataManager.GetGbStatisticsCallback() {
+                    @Override
+                    public void onFinish(GBDailyStatsModel gbDailyStatsModel) {
+                        averagePrice.setText(String.valueOf(gbDailyStatsModel.currentAveragePrice));
+                        totalLotCount.setText(String.valueOf(gbDailyStatsModel.currentLotsCount));
+                        totalAmount.setText(String.valueOf(gbDailyStatsModel.currentGBAmount));
+                        initGraph(root, gbDailyStatsModel.monthlyTimeline);
+                        Log.d("TEST", String.valueOf(gbDailyStatsModel.monthlyTimeline.get(0).number));
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                break;
             }
-        });
+            case R.id.radio_button_min:{
+                baseActivity.getDataManager().getMinStatistics(new DataManager.GetMinStatisticsCallback() {
+                    @Override
+                    public void onFinish(MinDailyStatsModel smsDailyStatsModel) {
+                        averagePrice.setText(String.valueOf(smsDailyStatsModel.currentAveragePrice));
+                        totalLotCount.setText(String.valueOf(smsDailyStatsModel.currentLotsCount));
+                        totalAmount.setText(String.valueOf(smsDailyStatsModel.currentMINAmount));
+                        initGraph(root, smsDailyStatsModel.monthlyTimeline);
+                        Log.d("TEST", String.valueOf(smsDailyStatsModel.monthlyTimeline.get(0).number));
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                break;
+            }
+            case R.id.radio_button_sms:{
+                baseActivity.getDataManager().getSMSStatistics(new DataManager.GetSMSStatisticsCallback() {
+                    @Override
+                    public void onFinish(SMSDailyStatsModel smsDailyStatsModel) {
+                        averagePrice.setText(String.valueOf(smsDailyStatsModel.currentAveragePrice));
+                        totalLotCount.setText(String.valueOf(smsDailyStatsModel.currentLotsCount));
+                        totalAmount.setText(String.valueOf(smsDailyStatsModel.currentSMSAmount));
+                        initGraph(root, smsDailyStatsModel.monthlyTimeline);
+                        Log.d("TEST", String.valueOf(smsDailyStatsModel.monthlyTimeline.get(0).number));
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                break;
+            }
+        }
+
+
     }
     private void initRecyclerView(View root, MainActivity baseActivity){
         RecyclerView lotsList = root.findViewById(R.id.my_lots_list);

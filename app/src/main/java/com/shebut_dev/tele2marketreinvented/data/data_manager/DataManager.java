@@ -2,6 +2,8 @@ package com.shebut_dev.tele2marketreinvented.data.data_manager;
 
 import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
+import com.shebut_dev.tele2marketreinvented.data.model.MinDailyStatsModel;
+import com.shebut_dev.tele2marketreinvented.data.model.SMSDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.UserModel;
 
 import java.util.List;
@@ -16,6 +18,15 @@ public interface DataManager {
 
     interface GetGbStatisticsCallback{
         void onFinish(GBDailyStatsModel gbDailyStatsModel);
+        void onError(Exception e);
+    }
+
+    interface GetSMSStatisticsCallback{
+        void onFinish(SMSDailyStatsModel smsDailyStatsModel);
+        void onError(Exception e);
+    }
+    interface GetMinStatisticsCallback{
+        void onFinish(MinDailyStatsModel gbDailyStatsModel);
         void onError(Exception e);
     }
 
@@ -62,6 +73,8 @@ public interface DataManager {
                   PostUserCallback callback);
 
     void getGbStatistics(GetGbStatisticsCallback callback);
+    void getSMSStatistics(GetSMSStatisticsCallback callback);
+    void getMinStatistics(GetMinStatisticsCallback callback);
 
     void postLot(String userID, LotModel lotModel,
                  PostLotCallback callback);

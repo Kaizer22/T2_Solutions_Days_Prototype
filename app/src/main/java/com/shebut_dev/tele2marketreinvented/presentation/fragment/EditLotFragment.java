@@ -1,10 +1,14 @@
 package com.shebut_dev.tele2marketreinvented.presentation.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.shebut_dev.tele2marketreinvented.R;
+import com.shebut_dev.tele2marketreinvented.data.SharedDataBaseReferences;
 import com.shebut_dev.tele2marketreinvented.data.data_manager.DataManager;
 import com.shebut_dev.tele2marketreinvented.data.model.GBDailyStatsModel;
 import com.shebut_dev.tele2marketreinvented.data.model.LotModel;
@@ -58,11 +63,16 @@ public class EditLotFragment extends Fragment {
                         shownCount = lotModel.nominal;
                         shownPrice = lotModel.price;
                         updateTextFields(root);
-                        int valueTypeNum = lotModel.itemType.equals("GB") ? R.id.radio_button_gb :
-                                lotModel.itemType.equals("MIN")  ? R.id.radio_button_min :
-                                        lotModel.itemType.equals("SMS")  ? R.id.radio_button_min : 0;
-                        int lotTypeNum = lotModel.lotType.equals("SELL") ? R.id.radio_button_sell :
-                                lotModel.lotType.equals("BUY") ? R.id.radio_button_buy : 0;
+                        int valueTypeNum = lotModel.itemType.equals(SharedDataBaseReferences.itemTypeGB)
+                                ? R.id.radio_button_gb :
+                                lotModel.itemType.equals(SharedDataBaseReferences.itemTypeMIN)
+                                        ? R.id.radio_button_min :
+                                        lotModel.itemType.equals(SharedDataBaseReferences.itemTypeSMS)
+                                                ? R.id.radio_button_min : 0;
+                        int lotTypeNum = lotModel.lotType.equals(SharedDataBaseReferences.lotTypeSELL)
+                                ? R.id.radio_button_sell :
+                                lotModel.lotType.equals(SharedDataBaseReferences.lotTypeBUY)
+                                        ? R.id.radio_button_buy : 0;
 
                         valueType.check(valueTypeNum);
                         lotType.check(lotTypeNum);
@@ -88,6 +98,12 @@ public class EditLotFragment extends Fragment {
     private void initInteractions(View root, MainActivity baseActivity) {
         ImageButton backToHome = root.findViewById(R.id.button_back_to_home_screen);
         Button editLot = root.findViewById(R.id.button_edit_lot);
+
+        TextView editPriceLink = root.findViewById(R.id.set_price_link);
+        editPriceLink.setOnClickListener(l -> {
+            openEditPriceDialog(root);
+            Log.d("DEBUG","CLICK");
+        });
 
         ImageButton increase = root.findViewById(R.id.button_increase_count);
         ImageButton decrease = root.findViewById(R.id.button_decrease_count);
@@ -151,5 +167,25 @@ public class EditLotFragment extends Fragment {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    private void openEditPriceDialog(View root) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View editPrice = layoutInflater.inflate(R.layout.edit_price_dialog, null);
+
+        AlertDialog.Builder alertDB = new AlertDialog.Builder(getContext());
+        alertDB.setView(editPrice);
+        final EditText priceInput = editPrice.findViewById(R.id.edit_text_edit_price);
+        alertDB
+                .setCancelable(false)
+                .setPositiveButton("Сохранить",
+                        (dialog, which) -> {
+                            shownPrice = Double.parseDouble(priceInput.getText().toString());
+                            updateTextFields(root);
+                            dialog.cancel();
+                        })
+                .setNegativeButton("Назад", (dialog, which) -> dialog.cancel());
+
+        alertDB.show();
     }
 }

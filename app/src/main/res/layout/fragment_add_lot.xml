@@ -11,7 +11,7 @@
         android:id="@+id/button_create_lot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/tele2_button_shape"
         android:paddingLeft="50dp"
         android:paddingTop="20dp"
@@ -22,7 +22,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lot_type_radio" />
+        app:layout_constraintTop_toBottomOf="@+id/set_price_link" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_dropdown" />
+            app:srcCompat="@drawable/tele2_logo" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -135,14 +135,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
         android:text="Что вы хотите разместить/получить на маркете?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+        app:layout_constraintTop_toBottomOf="@+id/lot_type_radio" />
 
     <RadioGroup
         android:id="@+id/value_type_radio"
@@ -216,7 +216,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/current_shown_count"
         app:layout_constraintEnd_toStartOf="@+id/current_shown_count"
         app:layout_constraintTop_toTopOf="@+id/current_shown_count"
-        app:srcCompat="@drawable/ic_button_add_lot" />
+        android:background="@drawable/minus_price"
+        />
 
     <TextView
         android:id="@+id/current_shown_count"
@@ -256,9 +257,10 @@
         app:layout_constraintTop_toBottomOf="@+id/current_shown_count" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/set_price_link"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:clickable="true"
         android:text="*Цена за ГБ. Задать свою цену"
         app:layout_constraintEnd_toEndOf="@+id/current_shown_price"
         app:layout_constraintStart_toStartOf="@+id/current_shown_price"
@@ -272,7 +274,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14">
+        app:layout_constraintTop_toBottomOf="@+id/divider3">
 
         <RadioButton
             android:id="@+id/radio_button_sell"

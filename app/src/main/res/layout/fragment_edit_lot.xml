@@ -12,7 +12,7 @@ android:layout_height="match_parent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="TextView"
+        android:text="до_сгорания_осталось"
         app:layout_constraintStart_toEndOf="@+id/lot_time_left"
         app:layout_constraintTop_toTopOf="@+id/lot_time_left" />
 
@@ -29,7 +29,7 @@ android:layout_height="match_parent">
         android:id="@+id/date_lot_created"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="дата_создания"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textView10"
         app:layout_constraintStart_toEndOf="@+id/textView10"
@@ -180,10 +180,11 @@ android:layout_height="match_parent">
     android:layout_width="30dp"
     android:layout_height="30dp"
     android:layout_marginEnd="16dp"
+    android:background="@drawable/minus_price"
     app:layout_constraintBottom_toBottomOf="@+id/current_shown_count"
     app:layout_constraintEnd_toStartOf="@+id/current_shown_count"
     app:layout_constraintTop_toTopOf="@+id/current_shown_count"
-    app:srcCompat="@drawable/ic_button_add_lot" />
+     />
 
 <TextView
     android:id="@+id/current_shown_count"
@@ -223,10 +224,11 @@ android:layout_height="match_parent">
     app:layout_constraintTop_toBottomOf="@+id/current_shown_count" />
 
 <TextView
-    android:id="@+id/textView14"
+    android:id="@+id/set_price_link"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="*Цена за ГБ. Задать свою цену"
+    android:clickable="true"
     app:layout_constraintEnd_toEndOf="@+id/current_shown_price"
     app:layout_constraintStart_toStartOf="@+id/current_shown_price"
     app:layout_constraintTop_toBottomOf="@+id/current_shown_price" />
@@ -239,7 +241,7 @@ android:layout_height="match_parent">
     android:orientation="horizontal"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView14">
+    app:layout_constraintTop_toBottomOf="@+id/set_price_link">
 
     <RadioButton
         android:id="@+id/radio_button_sell"
@@ -270,7 +272,7 @@ android:layout_height="match_parent">
         android:id="@+id/date_lot_edited"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="дата_последнего_изменения"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textView13"
         app:layout_constraintStart_toEndOf="@+id/textView13"
